@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // form key
   final _formKey = GlobalKey<FormState>();
+  // late FirebaseAuth _auth;
 
   // firebase
   final _auth = FirebaseAuth.instance;
