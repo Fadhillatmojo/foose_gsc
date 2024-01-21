@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751418874363",
+    "project_id": "foose-food-stock-management",
+    "storage_bucket": "foose-food-stock-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751418874363:android:27fd1497436f9ab146d35e",
+        "android_client_info": {
+          "package_name": "com.example.foose_gsc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC--wetJRll1gUfTBQDivSUp0J9X_k5HgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

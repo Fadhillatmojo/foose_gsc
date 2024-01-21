@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:foose_gsc/ui/pages/article_page.dart';
+import 'package:foose_gsc/ui/pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,8 +18,15 @@ class _LoginPageState extends State<LoginPage> {
   // editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  // firebase
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+    // image logo
+    final googleImg = Image.asset('assets/google_icon.png');
+
     // email field
     final emailField = TextFormField(
       autofocus: false,
@@ -84,10 +94,10 @@ class _LoginPageState extends State<LoginPage> {
       color: AppColors.accentColor,
       child: MaterialButton(
         onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const HomeScreen()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ArticlePage()),
+          );
         },
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         minWidth: MediaQuery.of(context).size.width,
@@ -150,11 +160,18 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 30,
                     ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: googleImg,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Don’t have an  account?  ',
+                          'Don’t have an account?  ',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColors.primaryColor,
@@ -162,7 +179,14 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterPage(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Sign Up',
                             textAlign: TextAlign.center,
