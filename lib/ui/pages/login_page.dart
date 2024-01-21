@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/pages/article_page.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
@@ -15,12 +16,12 @@ class _LoginPageState extends State<LoginPage> {
   // form key
   final _formKey = GlobalKey<FormState>();
 
+  // firebase
+  final _auth = FirebaseAuth.instance;
+
   // editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  // firebase
-  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,18 @@ class _LoginPageState extends State<LoginPage> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
         emailController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+.@[a-zA-Z0-9.-]+.[a-z]")
+            .hasMatch(value)) {
+          return ("Please Enter A Valid Email");
+        }
+
+        return null;
       },
       style: const TextStyle(color: AppColors.primaryColor),
       cursorColor: AppColors.primaryColor,
@@ -64,6 +77,15 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: true,
       onSaved: (value) {
         passwordController.text = value!;
+      },
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{6,}$');
+        if (value!.isEmpty) {
+          return ("Password is Required for Login");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Please Enter Valid Password (Min. 6 Character)");
+        }
       },
       cursorColor: AppColors.primaryColor,
       textInputAction: TextInputAction.next,
@@ -206,5 +228,22 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  // login function
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const ArticlePage()))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+        throw e;
+      });
+    }
   }
 }
