@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     // image logo
     final googleImg = Image.asset('assets/google_icon.png');
 
-    // email field
+    // email field untuk login
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
