@@ -42,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
           return ("Please Enter Your Email");
         }
         // reg expression for email validation
+        // reg expression ini gunanya untuk buat validasi saja
         if (!RegExp("^[a-zA-Z0-9+_.-]+.@[a-zA-Z0-9.-]+.[a-z]")
             .hasMatch(value)) {
           return ("Please Enter A Valid Email");
