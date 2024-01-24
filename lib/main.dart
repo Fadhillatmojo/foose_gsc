@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'ui/pages/pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,9 @@ class App extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primaryColor: AppColors.primaryColor,
+          textTheme: GoogleFonts.poppinsTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         home: const LoginPage());
   }
