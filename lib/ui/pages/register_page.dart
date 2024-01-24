@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/models/models.dart';
 import 'package:foose_gsc/shared/colors.dart';
-import 'package:foose_gsc/ui/pages/article_page.dart';
+import 'package:foose_gsc/ui/pages/navbar_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -317,7 +317,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => ArticlePage()),
+        MaterialPageRoute(builder: (context) => const NavbarPage()),
         (route) => false);
   }
 }

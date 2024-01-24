@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
-import 'package:foose_gsc/ui/pages/article_page.dart';
+import 'package:foose_gsc/ui/pages/navbar_page.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
@@ -256,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const ArticlePage()))
+                      builder: (context) => const NavbarPage()))
                 });
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
