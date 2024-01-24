@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         hintText: 'Email',
         hintStyle: const TextStyle(
           color: AppColors.primaryColor,
+          fontSize: 15,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -107,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
         hintText: 'Password',
         hintStyle: const TextStyle(
           color: AppColors.primaryColor,
+          fontSize: 15,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -167,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                               color: AppColors.primaryColor,
                               fontSize: 20,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           height: 30,
