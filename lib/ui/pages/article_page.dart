@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:foose_gsc/ui/pages/pages.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
@@ -18,10 +21,7 @@ class _ArticlePageState extends State<ArticlePage> {
       color: AppColors.accentColor,
       child: MaterialButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ArticlePage()),
-          );
+          logout(context);
         },
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         minWidth: MediaQuery.of(context).size.width,
@@ -41,5 +41,15 @@ class _ArticlePageState extends State<ArticlePage> {
         child: logoutButton,
       ),
     );
+  }
+
+  // logout function
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Fluttertoast.showToast(msg: "Logout Success");
+    if (!context.mounted) return;
+
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }
