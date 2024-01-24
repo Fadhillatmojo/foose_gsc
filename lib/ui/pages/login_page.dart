@@ -69,6 +69,14 @@ class _LoginPageState extends State<LoginPage> {
           borderSide: const BorderSide(color: AppColors.primaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 179, 23, 12)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
 
@@ -108,6 +116,14 @@ class _LoginPageState extends State<LoginPage> {
           borderSide: const BorderSide(color: AppColors.primaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 179, 23, 12)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
 
@@ -118,10 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       color: AppColors.accentColor,
       child: MaterialButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ArticlePage()),
-          );
+          signIn(emailController.text, passwordController.text);
         },
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         minWidth: MediaQuery.of(context).size.width,
@@ -235,17 +248,17 @@ class _LoginPageState extends State<LoginPage> {
   // login function
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const ArticlePage()))
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-        throw e;
-      });
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const ArticlePage()))
+                });
+      } catch (e) {
+        Fluttertoast.showToast(msg: e.toString());
+      }
     }
   }
 }
