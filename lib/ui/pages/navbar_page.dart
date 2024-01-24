@@ -26,36 +26,6 @@ class _NavbarPageState extends State<NavbarPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: _childrenPage[_currentIndex],
-      // // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.only(bottom: 10),
-      //   child: CustomBott(
-      //     type: BottomNavigationBarType.fixed,
-      //     backgroundColor: AppColors.primaryColor,
-      //     onTap: onTabTapped,
-      //     currentIndex: _currentIndex,
-      //     items: const [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.article),
-      //         label: 'Article',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.local_dining),
-      //         label: 'Recipe',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.scanner),
-      //         label: 'scan',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.food_bank),
-      //         label: 'FoodStock',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.person),
-      //         label: 'Profile',
-      //       ),
-      //     ],
-      //   ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(20),
         height: screenWidth * .155,
