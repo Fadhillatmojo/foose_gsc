@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/widgets/widgets.dart';
 
@@ -76,11 +76,20 @@ class _ArticlePageState extends State<ArticlePage> {
 
                   for (var article in articles) {
                     var title = article['title'];
+                    var author = article['author'];
                     var content = article['content'];
                     var imageUrl = article['imageUrl'];
+                    var createdAtTimestamp = article['created_at'];
+
+                    // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
+                    var createdAtDateTime =
+                        (createdAtTimestamp as Timestamp).toDate();
+                    var createdAt = DateFormat('dd MMMM yyyy HH:mm')
+                        .format(createdAtDateTime);
 
                     // Assuming you have a separate widget for displaying articles
-                    var articleWidget = ArticleWidget(title, content, imageUrl);
+                    var articleWidget = ArticleWidget(
+                        title, author, content, imageUrl, createdAt);
                     articleWidgets.add(articleWidget);
                   }
 
