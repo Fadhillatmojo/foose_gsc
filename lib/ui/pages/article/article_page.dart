@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:foose_gsc/ui/widgets/widgets.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
@@ -10,6 +13,17 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticlePageState extends State<ArticlePage> {
   final TextEditingController searchController = TextEditingController();
+  final CollectionReference _items =
+      FirebaseFirestore.instance.collection("articles");
+
+  String imageUrl = '';
+  late Stream<QuerySnapshot> _stream;
+
+  @override
+  void initState() {
+    super.initState();
+    _stream = FirebaseFirestore.instance.collection('articles').snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +63,34 @@ class _ArticlePageState extends State<ArticlePage> {
           child: Column(
             children: [
               searchField,
+              const SizedBox(height: 20),
+              StreamBuilder<QuerySnapshot>(
+                stream: _stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  }
+
+                  var articles = snapshot.data!.docs;
+                  List<Widget> articleWidgets = [];
+
+                  for (var article in articles) {
+                    var title = article['title'];
+                    var content = article['content'];
+                    var imageUrl = article['imageUrl'];
+
+                    // Assuming you have a separate widget for displaying articles
+                    var articleWidget = ArticleWidget(title, content, imageUrl);
+                    articleWidgets.add(articleWidget);
+                  }
+
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: articleWidgets,
+                  );
+                },
+              ),
             ],
           ),
         ),
