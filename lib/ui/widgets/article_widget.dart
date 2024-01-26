@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:foose_gsc/ui/pages/article/detail_article_page.dart';
 
 class ArticleWidget extends StatelessWidget {
   final String title;
@@ -16,61 +17,80 @@ class ArticleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Customize the UI for displaying each article
-    return Card(
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8.0), // Radius for top left corner
-              bottomLeft: Radius.circular(8.0), // Radius for bottom left corner
-            ),
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover, // Crop and maintain aspect ratio
-              width: 108,
-              height: 128,
+    return GestureDetector(
+      onTap: () {
+        // Navigasi ke halaman detail dan kirimkan data
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailArticlePage(
+              title: title,
+              author: author,
+              content: content,
+              imageUrl: imageUrl,
+              createdAt: createdAt,
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    author,
-                    maxLines: 1, // Set the maximum number of lines
-                    style: const TextStyle(
-                      color: AppColors.greyColor,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(
-                      height: 8), // Add some space between author and title
-                  Text(
-                    title,
-                    maxLines: 2, // Set the maximum number of lines
-                    overflow: TextOverflow
-                        .ellipsis, // Show ellipsis when text overflows
-                    style: const TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(
-                      height: 8), // Add some space between title and createdAt
-                  Text(
-                    createdAt,
-                    style: const TextStyle(
-                      color: AppColors.greyColor,
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
+        );
+      },
+      child: Card(
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0), // Radius for top left corner
+                bottomLeft:
+                    Radius.circular(8.0), // Radius for bottom left corner
+              ),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover, // Crop and maintain aspect ratio
+                width: 108,
+                height: 128,
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      author,
+                      maxLines: 1, // Set the maximum number of lines
+                      style: const TextStyle(
+                        color: AppColors.greyColor,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(
+                        height: 8), // Add some space between author and title
+                    Text(
+                      title,
+                      maxLines: 2, // Set the maximum number of lines
+                      overflow: TextOverflow
+                          .ellipsis, // Show ellipsis when text overflows
+                      style: const TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                        height:
+                            8), // Add some space between title and createdAt
+                    Text(
+                      createdAt,
+                      style: const TextStyle(
+                        color: AppColors.greyColor,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
