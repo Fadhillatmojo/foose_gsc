@@ -98,6 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (!regex.hasMatch(value)) {
           return ("Please Enter Valid Password (Min. 6 Character)");
         }
+        return null;
       },
       cursorColor: AppColors.primaryColor,
       textInputAction: TextInputAction.next,

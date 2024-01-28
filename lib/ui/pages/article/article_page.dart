@@ -13,8 +13,6 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticlePageState extends State<ArticlePage> {
   final TextEditingController searchController = TextEditingController();
-  final CollectionReference _items =
-      FirebaseFirestore.instance.collection("articles");
 
   String imageUrl = '';
   late Stream<QuerySnapshot> _stream;
@@ -68,7 +66,7 @@ class _ArticlePageState extends State<ArticlePage> {
                 stream: _stream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
 
                   var articles = snapshot.data!.docs;
@@ -95,7 +93,7 @@ class _ArticlePageState extends State<ArticlePage> {
 
                   return ListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: articleWidgets,
                   );
                 },

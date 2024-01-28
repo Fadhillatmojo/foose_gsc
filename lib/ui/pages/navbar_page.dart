@@ -59,7 +59,7 @@ class _NavbarPageState extends State<NavbarPage> {
                   width: screenWidth * .17125,
                   child: Center(
                     child: AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       curve: Curves.fastLinearToSlowEaseIn,
                       height: index == _currentIndex ? screenWidth * .12 : 0,
                       width: index == _currentIndex ? screenWidth * .17125 : 0,

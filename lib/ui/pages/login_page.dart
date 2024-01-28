@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
-import 'package:foose_gsc/ui/pages/navbar_page.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
@@ -97,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
         if (!regex.hasMatch(value)) {
           return ("Please Enter Valid Password (Min. 6 Character)");
         }
+        return null;
       },
       cursorColor: AppColors.primaryColor,
       textInputAction: TextInputAction.next,
