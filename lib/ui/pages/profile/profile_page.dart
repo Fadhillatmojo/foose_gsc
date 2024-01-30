@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages.dart';
 
@@ -37,10 +38,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // logout function
   Future<void> logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     await FirebaseAuth.instance.signOut();
     Fluttertoast.showToast(msg: "Logout Success");
     if (!context.mounted) return;
 
+    prefs.remove('uid');
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginPage()));
   }

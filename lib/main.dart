@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'ui/pages/pages.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,23 +19,64 @@ void main() async {
               projectId: 'foose-food-stock-management'),
         )
       : await Firebase.initializeApp();
+
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  var auth = FirebaseAuth.instance;
+  String? uid;
+
+  Future<String?> getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    uid = prefs.getString('uid');
+    return uid;
+  }
+
+  @override
+  void initState() {
+    // getUid();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          primaryColor: AppColors.primaryColor,
-          textTheme: GoogleFonts.poppinsTextTheme(
-            Theme.of(context).textTheme,
-          ),
-        ),
-        home: const LoginPage());
+    return FutureBuilder<String?>(
+      future: getUid(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          uid = snapshot.data;
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              scaffoldBackgroundColor: AppColors.backgroundColor,
+              primaryColor: AppColors.primaryColor,
+              textTheme: GoogleFonts.poppinsTextTheme(
+                Theme.of(context).textTheme,
+              ),
+            ),
+            home: uid != null ? const NavbarPage() : const LoginPage(),
+          );
+        } else {
+          // Tampilkan indikator loading jika proses asinkron belum selesai
+          return const MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }

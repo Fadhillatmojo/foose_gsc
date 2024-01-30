@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -258,6 +259,11 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const NavbarPage()))
                 });
+        String? userId = _auth.currentUser?.uid;
+        if (userId != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('uid', userId);
+        }
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
       }
