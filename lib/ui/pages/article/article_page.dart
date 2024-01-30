@@ -54,6 +54,8 @@ class _ArticlePageState extends State<ArticlePage> {
         ),
       ),
     );
+
+    // page return build context
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -66,7 +68,9 @@ class _ArticlePageState extends State<ArticlePage> {
                 stream: _stream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const CircularProgressIndicator();
+                    return const CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    );
                   }
 
                   var articles = snapshot.data!.docs;

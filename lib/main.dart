@@ -71,7 +71,9 @@ class _AppState extends State<App> {
             debugShowCheckedModeBanner: false,
             home: Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
           );
