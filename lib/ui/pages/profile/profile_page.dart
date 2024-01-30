@@ -31,8 +31,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: logoutButton,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              logoutButton,
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -49,6 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
         MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
+  // widget logout button
   Widget _buildLogoutButton() {
     return Material(
       elevation: 5,

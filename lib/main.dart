@@ -67,9 +67,16 @@ class _AppState extends State<App> {
           );
         } else {
           // Tampilkan indikator loading jika proses asinkron belum selesai
-          return const MaterialApp(
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: Scaffold(
+            theme: ThemeData(
+              scaffoldBackgroundColor: AppColors.backgroundColor,
+              primaryColor: AppColors.primaryColor,
+              textTheme: GoogleFonts.poppinsTextTheme(
+                Theme.of(context).textTheme,
+              ),
+            ),
+            home: const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
