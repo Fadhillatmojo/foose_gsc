@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/models/models.dart';
 import 'package:foose_gsc/shared/colors.dart';
 import 'package:foose_gsc/ui/pages/navbar_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -288,6 +289,11 @@ class _RegisterPageState extends State<RegisterPage> {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((uid) => {postDetailsToFirestore()});
+        String? userId = _auth.currentUser?.uid;
+        if (userId != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('uid', userId);
+        }
       } catch (e) {
         Fluttertoast.showToast(msg: e.toString());
       }
