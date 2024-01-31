@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,45 @@ class _FoodStockPageState extends State<FoodStockPage> {
         .collection('foodstocks')
         .where('uid', isEqualTo: currentUserUid)
         .snapshots();
+  }
+
+  List<Widget> groupFoodStocksByName(List<DocumentSnapshot> foodStocks) {
+    // fungsi dibawah ini, adalah untuk gruping foodstocks berdasarkan elemen di dalem foodstock (yakni nama yg udah di lowercase)
+    var groupedFoodStocks = groupBy(
+        foodStocks, (foodStock) => (foodStock['name'] as String).toLowerCase());
+    List<Widget> foodStockWidgets = [];
+
+    groupedFoodStocks.forEach((name, stocks) {
+      // print('Name: $name');
+      // List<Map<String, dynamic>> stockDataList = [];
+      // for (var stock in stocks) {
+      //   var stockData = stock.data() as Map<String, dynamic>;
+      //   stockDataList.add(stockData);
+      // }
+
+      // print('Stocks: $stockDataList');
+
+      var totalQuantity = calculateTotalQuantity(stocks);
+      var expirationDuration = stocks[0]['expirationDuration'];
+      var purchaseDate = stocks[0]['purchaseDate'];
+      var purchaseDateTime = (purchaseDate as Timestamp).toDate();
+      var createdAt = DateFormat('dd MMMM yyyy HH:mm').format(purchaseDateTime);
+
+      var foodStockWidget = FoodStockWidget(
+        name,
+        totalQuantity.toString(),
+        expirationDuration.toString(),
+        createdAt,
+      );
+      foodStockWidgets.add(foodStockWidget);
+    });
+
+    return foodStockWidgets;
+  }
+
+  int calculateTotalQuantity(List<DocumentSnapshot> stocks) {
+    return stocks.fold<int>(
+        0, (int sum, DocumentSnapshot stock) => sum + stock['quantity'] as int);
   }
 
   @override
@@ -69,31 +109,33 @@ class _FoodStockPageState extends State<FoodStockPage> {
                       }
 
                       var foodStocks = snapshot.data!.docs;
-                      List<Widget> foodStockWidgets = [];
+                      // Group by nama makanan
+                      // List<Widget> foodStockWidgets = [];
+                      var groupedFoodStocks = groupFoodStocksByName(foodStocks);
 
-                      for (var foodStock in foodStocks) {
-                        var name = foodStock['name'];
-                        var quantity = foodStock['quantity'].toString();
-                        var expirationDuration =
-                            foodStock['expirationDuration'];
-                        var purchaseDate = foodStock['purchaseDate'];
+                      // for (var foodStock in foodStocks) {
+                      //   var name = foodStock['name'];
+                      //   var quantity = foodStock['quantity'].toString();
+                      //   var expirationDuration =
+                      //       foodStock['expirationDuration'];
+                      //   var purchaseDate = foodStock['purchaseDate'];
 
-                        // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
-                        var purchaseDateTime =
-                            (purchaseDate as Timestamp).toDate();
-                        var createdAt = DateFormat('dd MMMM yyyy HH:mm')
-                            .format(purchaseDateTime);
+                      //   // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
+                      //   var purchaseDateTime =
+                      //       (purchaseDate as Timestamp).toDate();
+                      //   var createdAt = DateFormat('dd MMMM yyyy HH:mm')
+                      //       .format(purchaseDateTime);
 
-                        // Assuming you have a separate widget for displaying foodStocks
-                        var foodStockWidget = FoodStockWidget(
-                            name, quantity, expirationDuration, createdAt);
-                        foodStockWidgets.add(foodStockWidget);
-                      }
+                      //   // Assuming you have a separate widget for displaying foodStocks
+                      //   var foodStockWidget = FoodStockWidget(
+                      //       name, quantity, expirationDuration, createdAt);
+                      //   foodStockWidgets.add(foodStockWidget);
+                      // }
 
                       return ListView(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        children: foodStockWidgets,
+                        children: groupedFoodStocks,
                       );
                     },
                   ),
