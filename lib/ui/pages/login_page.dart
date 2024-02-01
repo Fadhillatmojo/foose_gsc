@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:foose_gsc/bloc/blocs.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,10 +17,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // form key
   final _formKey = GlobalKey<FormState>();
-  // late FirebaseAuth _auth;
+  // late AuthBloc _authBloc;
 
   // firebase
   final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    // _authBloc = AuthBloc();
+  }
 
   // editing controller
   final TextEditingController emailController = TextEditingController();
@@ -148,6 +156,52 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+    // final loginButton = BlocBuilder<AuthBloc, AuthState>(
+    //   builder: (context, state) {
+    //     if (state is AuthLoadingState) {
+    //       return const CircularProgressIndicator();
+    //     } else if (state is AuthSuccessState) {
+    //       // Handle successful login, navigate to the next screen, etc.
+    //       Fluttertoast.showToast(msg: "Login Successful");
+    //       Navigator.of(context).pushReplacement(
+    //           MaterialPageRoute(builder: (context) => const NavbarPage()));
+    //       String? userId = _auth.currentUser?.uid;
+    //       if (userId != null) {
+    //         SharedPreferences prefs =
+    //             SharedPreferences.getInstance() as SharedPreferences;
+    //         prefs.setString('uid', userId);
+    //       }
+    //       return const Text('Login success');
+    //       // return const Text('Login Successful');
+    //     } else if (state is AuthErrorState) {
+    //       // Handle login error
+    //       return Text('Login Error: ${state.error}');
+    //     } else {
+    //       // Initial state or other states
+    //       return Material(
+    //         elevation: 5,
+    //         borderRadius: BorderRadius.circular(10),
+    //         color: AppColors.accentColor,
+    //         child: MaterialButton(
+    //           onPressed: () {
+    //             _authBloc.add(SignInEvent(
+    //               email: emailController.text,
+    //               password: passwordController.text,
+    //             ));
+    //           },
+    //           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+    //           minWidth: MediaQuery.of(context).size.width,
+    //           child: const Text(
+    //             'Sign In',
+    //             textAlign: TextAlign.center,
+    //             style: TextStyle(color: Colors.white, fontSize: 15),
+    //           ),
+    //           // ... rest of your button code
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,

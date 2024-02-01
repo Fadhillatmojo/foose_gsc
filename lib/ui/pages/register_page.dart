@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foose_gsc/bloc/blocs.dart';
 import 'package:foose_gsc/models/models.dart';
 import 'package:foose_gsc/shared/colors.dart';
 import 'package:foose_gsc/ui/pages/navbar_page.dart';
@@ -198,81 +200,88 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: AppColors.primaryColor,
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider(
+        create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        child: Scaffold(
+          backgroundColor: AppColors.backgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: AppColors.primaryColor,
+              ),
+            ),
           ),
-        ),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            color: AppColors.backgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    // column register Account
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          body: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                color: AppColors.backgroundColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
+                        // column register Account
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Create Your Account',
+                              style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            emailField,
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            passwordField,
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            confirmPasswordField,
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            registerButton,
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
                         const Text(
-                          'Create Your Account',
+                          'Or Sign Up with',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColors.primaryColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
                           height: 30,
                         ),
-                        emailField,
-                        const SizedBox(
-                          height: 30,
+                        GestureDetector(
+                          onTap: () {},
+                          child: googleImg,
                         ),
-                        passwordField,
                         const SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
-                        confirmPasswordField,
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        registerButton,
                       ],
                     ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    const Text(
-                      'Or Sign Up with',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: googleImg,
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
