@@ -4,8 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:foose_gsc/bloc/blocs.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
