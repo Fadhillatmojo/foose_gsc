@@ -181,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
-    // login button
+    // register button material
     final registerButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(10),
