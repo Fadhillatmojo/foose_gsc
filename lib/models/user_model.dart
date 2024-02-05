@@ -1,3 +1,4 @@
+// user model uid email as attributes
 class UserModel {
   String? uid;
   String? email;
