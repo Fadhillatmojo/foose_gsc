@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
+  // ini untuk mengecek platformnya itu android atau bukan, kalau iya maka inisialisasikan Firebase dengan atribut nya sebagai di bawah
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid
       ? await Firebase.initializeApp(
