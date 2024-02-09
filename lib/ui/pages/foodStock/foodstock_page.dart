@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/widgets/widgets.dart';
 
@@ -34,25 +33,27 @@ class _FoodStockPageState extends State<FoodStockPage> {
 
     groupedFoodStocks.forEach((name, stocks) {
       // print('Name: $name');
-      // List<Map<String, dynamic>> stockDataList = [];
-      // for (var stock in stocks) {
-      //   var stockData = stock.data() as Map<String, dynamic>;
-      //   stockDataList.add(stockData);
-      // }
+      List<Map<String, dynamic>> stockDataList = [];
+      for (var stock in stocks) {
+        var stockData = stock.data() as Map<String, dynamic>;
+        stockDataList.add(stockData);
+      }
 
       // print('Stocks: $stockDataList');
+      // print('tipe data stocks: ${stockDataList.runtimeType}');
 
       var totalQuantity = calculateTotalQuantity(stocks);
-      var expirationDuration = stocks[0]['expirationDuration'];
-      var purchaseDate = stocks[0]['purchaseDate'];
-      var purchaseDateTime = (purchaseDate as Timestamp).toDate();
-      var createdAt = DateFormat('dd MMMM yyyy HH:mm').format(purchaseDateTime);
+      // var expirationDuration = stocks[0]['expirationDuration'];
+      // var purchaseDate = stocks[0]['purchaseDate'];
+      // var purchaseDateTime = (purchaseDate as Timestamp).toDate();
+      // var createdAt = DateFormat('dd MMMM yyyy HH:mm').format(purchaseDateTime);
 
       var foodStockWidget = FoodStockWidget(
         name,
         totalQuantity.toString(),
-        expirationDuration.toString(),
-        createdAt,
+        // expirationDuration.toString(),
+        // createdAt,
+        stockDataList,
       );
       foodStockWidgets.add(foodStockWidget);
     });
@@ -87,7 +88,7 @@ class _FoodStockPageState extends State<FoodStockPage> {
                   height: 10,
                 ),
                 const Text(
-                  'Manage Your Food Stock here',
+                  'Manage Your Food Stocks Here',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: AppColors.primaryColor,

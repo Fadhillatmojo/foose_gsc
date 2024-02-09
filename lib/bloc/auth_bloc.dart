@@ -7,10 +7,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   AuthBloc({required this.authRepository}) : super(UnAuthenticated()) {
     on<SignUpRequested>((event, state) async {
+      // ignore: invalid_use_of_visible_for_testing_member
       emit(Loading());
       try {
         authRepository.signUp(email: event.email, password: event.password);
       } catch (e) {
+        // ignore: invalid_use_of_visible_for_testing_member
         emit(UnAuthenticated());
       }
     });
