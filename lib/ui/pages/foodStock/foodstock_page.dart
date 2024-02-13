@@ -69,80 +69,77 @@ class _FoodStockPageState extends State<FoodStockPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                const Text(
-                  'Food Stocks',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Manage Your Food Stocks Here',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _stream,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        );
-                      }
-
-                      var foodStocks = snapshot.data!.docs;
-                      // Group by nama makanan
-                      // List<Widget> foodStockWidgets = [];
-                      var groupedFoodStocks = groupFoodStocksByName(foodStocks);
-
-                      // for (var foodStock in foodStocks) {
-                      //   var name = foodStock['name'];
-                      //   var quantity = foodStock['quantity'].toString();
-                      //   var expirationDuration =
-                      //       foodStock['expirationDuration'];
-                      //   var purchaseDate = foodStock['purchaseDate'];
-
-                      //   // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
-                      //   var purchaseDateTime =
-                      //       (purchaseDate as Timestamp).toDate();
-                      //   var createdAt = DateFormat('dd MMMM yyyy HH:mm')
-                      //       .format(purchaseDateTime);
-
-                      //   // Assuming you have a separate widget for displaying foodStocks
-                      //   var foodStockWidget = FoodStockWidget(
-                      //       name, quantity, expirationDuration, createdAt);
-                      //   foodStockWidgets.add(foodStockWidget);
-                      // }
-
-                      return ListView(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: groupedFoodStocks,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const Text(
+                'Food Stocks',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Manage Your Food Stocks Here',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _stream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const CircularProgressIndicator(
+                        color: AppColors.primaryColor,
                       );
-                    },
-                  ),
+                    }
+
+                    var foodStocks = snapshot.data!.docs;
+                    // Group by nama makanan
+                    // List<Widget> foodStockWidgets = [];
+                    var groupedFoodStocks = groupFoodStocksByName(foodStocks);
+
+                    // for (var foodStock in foodStocks) {
+                    //   var name = foodStock['name'];
+                    //   var quantity = foodStock['quantity'].toString();
+                    //   var expirationDuration =
+                    //       foodStock['expirationDuration'];
+                    //   var purchaseDate = foodStock['purchaseDate'];
+
+                    //   // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
+                    //   var purchaseDateTime =
+                    //       (purchaseDate as Timestamp).toDate();
+                    //   var createdAt = DateFormat('dd MMMM yyyy HH:mm')
+                    //       .format(purchaseDateTime);
+
+                    //   // Assuming you have a separate widget for displaying foodStocks
+                    //   var foodStockWidget = FoodStockWidget(
+                    //       name, quantity, expirationDuration, createdAt);
+                    //   foodStockWidgets.add(foodStockWidget);
+                    // }
+
+                    return ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: groupedFoodStocks,
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

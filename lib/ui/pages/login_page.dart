@@ -317,7 +317,7 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('uid', userId);
         }
       } catch (e) {
-        Fluttertoast.showToast(msg: e.toString());
+        Fluttertoast.showToast(msg: 'Password Salah');
       }
     }
   }

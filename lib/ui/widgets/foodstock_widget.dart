@@ -15,40 +15,46 @@ class FoodStockWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a TextEditingController for each item
+    List<TextEditingController> textControllers = [];
+    for (var stock in stocks) {
+      textControllers.add(TextEditingController(
+        text: stock['quantity'].toString(),
+      ));
+    }
+
     // Customize the UI for displaying each article
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          // function buat munculin bottom pop up detail
-          _showFoodStockDetails(context);
-        },
-        child: Container(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // setiap row nya isinya adalah icon trash, nama food, total totalQuantity
-            children: [
-              Text(
-                name.capitalizeFirstLetter(),
-                maxLines: 1, // Set the maximum number of lines
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+    return GestureDetector(
+      onTap: () {
+        // function buat munculin bottom pop up detail
+        _showFoodStockDetails(context);
+      },
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // setiap row nya isinya adalah icon trash, nama food, total totalQuantity
+          children: [
+            Text(
+              name.capitalizeFirstLetter(),
+              maxLines: 1, // Set the maximum number of lines
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
               ),
-              Text(
-                'X $totalQuantity',
-                maxLines: 1, // Set the maximum number of lines
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
+            ),
+            Text(
+              'X $totalQuantity',
+              maxLines: 1, // Set the maximum number of lines
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -58,25 +64,25 @@ class FoodStockWidget extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(35.0),
-          child: Column(
-            children: [
-              const Text(
-                'Details',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 25),
-              for (var stock in stocks)
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
+        return SingleChildScrollView(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(35.0),
+            child: Column(
+              children: [
+                const Text(
+                  'Details',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 25),
+                for (var stock in stocks)
+                  Row(
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -100,15 +106,37 @@ class FoodStockWidget extends StatelessWidget {
                           const SizedBox(height: 12),
                         ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text('${stock['quantity']}'),
-                      ],
-                    ),
-                  ],
-                ),
-            ],
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.add_circle_outline_rounded),
+                            onPressed: () {
+                              // kurangkan quantity di sini
+                            },
+                          ),
+                          Text(
+                            '${stock['quantity']}',
+                            maxLines: 1, // Set the maximum number of lines
+                            style: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          IconButton(
+                            icon:
+                                const Icon(Icons.remove_circle_outline_rounded),
+                            onPressed: () {
+                              // kurangkan quantity di sini
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
         );
       },
