@@ -145,6 +145,11 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           signIn(emailController.text, passwordController.text);
         },
+        splashColor: AppColors.darkColor,
+        highlightColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Atur radius sudut di sini
+        ),
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         minWidth: MediaQuery.of(context).size.width,
         child: const Text(

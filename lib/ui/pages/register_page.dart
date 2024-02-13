@@ -190,6 +190,11 @@ class _RegisterPageState extends State<RegisterPage> {
         onPressed: () {
           signUp(emailController.text, confirmPasswordController.text);
         },
+        splashColor: AppColors.darkColor,
+        highlightColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Atur radius sudut di sini
+        ),
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         minWidth: MediaQuery.of(context).size.width,
         child: const Text(
