@@ -14,6 +14,7 @@ class FoodStockPage extends StatefulWidget {
 
 class _FoodStockPageState extends State<FoodStockPage> {
   late Stream<QuerySnapshot> _stream;
+  Color _containerColor = Colors.transparent;
 
   @override
   void initState() {
@@ -68,57 +69,132 @@ class _FoodStockPageState extends State<FoodStockPage> {
 
   @override
   Widget build(BuildContext context) {
+    // generate recipe button material
+    final generateRecipeButton = Material(
+      elevation: 0,
+      borderRadius: BorderRadius.circular(30),
+      color: AppColors.accentColor,
+      child: MaterialButton(
+        onPressed: () {},
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        minWidth: null,
+        splashColor: AppColors.darkColor,
+        highlightColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // Atur radius sudut di sini
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Generate Recipe',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              Icons.arrow_circle_right_sharp,
+              color: Colors.white,
+            )
+          ],
+        ),
+      ),
+    );
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
-                'Food Stocks',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'Manage Your Food Stocks Here',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600),
+              Column(children: [
+                GestureDetector(
+                  onTap: () {
+                    // Ubah warna kontainer menjadi abu-abu sejenak ketika diklik
+                    setState(() {
+                      _containerColor = AppColors
+                          .microInteractionGreyColor; // Warna abu-abu dengan opasitas 0.5
+                    });
+
+                    // Kembalikan warna kontainer ke semula setelah beberapa waktu
+                    Future.delayed(const Duration(milliseconds: 200), () {
+                      setState(() {
+                        _containerColor =
+                            Colors.transparent; // Kembalikan ke transparan
+                      });
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          10.0), // Adjust the value as needed
+                      color: _containerColor,
+                    ),
+                    child: const Icon(
+                      Icons.more_vert_outlined,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ]),
+              Column(
+                children: [
+                  const Text(
+                    'Food Stocks',
+                    // textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    'Manage Your Food Stocks Here',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _stream,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          );
+                        }
+
+                        var foodStocks = snapshot.data!.docs;
+                        // Group widget by nama makanan
+                        var groupedFoodStocks =
+                            groupFoodStocksByName(foodStocks);
+
+                        return ListView(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: groupedFoodStocks,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: _stream,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const CircularProgressIndicator(
-                        color: AppColors.primaryColor,
-                      );
-                    }
-
-                    var foodStocks = snapshot.data!.docs;
-                    // Group widget by nama makanan
-                    var groupedFoodStocks = groupFoodStocksByName(foodStocks);
-
-                    return ListView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: groupedFoodStocks,
-                    );
-                  },
-                ),
-              ),
+              generateRecipeButton,
             ],
           ),
         ),

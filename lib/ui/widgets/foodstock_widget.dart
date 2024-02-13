@@ -168,6 +168,71 @@ class _FoodStockWidgetState extends State<FoodStockWidget> {
                       ),
                     ],
                   ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  // Cancel button material
+                  MaterialButton(
+                    onPressed: () {},
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    minWidth: null,
+                    splashColor: AppColors.microInteractionGreyColor,
+                    highlightColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(color: AppColors.accentColor)),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Discard',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColors.accentColor, fontSize: 15),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.cancel_outlined,
+                          color: AppColors.accentColor,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+
+                  // Save button material
+                  MaterialButton(
+                    onPressed: () {},
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    minWidth: null,
+                    color: AppColors.accentColor,
+                    splashColor: AppColors.darkColor,
+                    highlightColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Save',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
               ],
             ),
           ),
