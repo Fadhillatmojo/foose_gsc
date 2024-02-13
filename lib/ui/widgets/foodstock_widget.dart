@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:intl/intl.dart';
 
-class FoodStockWidget extends StatelessWidget {
+class FoodStockWidget extends StatefulWidget {
   final String name;
   final String totalQuantity;
   // final String expirationDuration;
@@ -14,10 +14,17 @@ class FoodStockWidget extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<FoodStockWidget> createState() => _FoodStockWidgetState();
+}
+
+class _FoodStockWidgetState extends State<FoodStockWidget> {
+  Color _containerColor = Colors.transparent;
+
+  @override
   Widget build(BuildContext context) {
     // Create a TextEditingController for each item
     List<TextEditingController> textControllers = [];
-    for (var stock in stocks) {
+    for (var stock in widget.stocks) {
       textControllers.add(TextEditingController(
         text: stock['quantity'].toString(),
       ));
@@ -28,31 +35,52 @@ class FoodStockWidget extends StatelessWidget {
       onTap: () {
         // function buat munculin bottom pop up detail
         _showFoodStockDetails(context);
+
+        // Ubah warna kontainer menjadi abu-abu sejenak ketika diklik
+        setState(() {
+          _containerColor = AppColors
+              .microInteractionGreyColor; // Warna abu-abu dengan opasitas 0.5
+        });
+
+        // Kembalikan warna kontainer ke semula setelah beberapa waktu
+        Future.delayed(const Duration(milliseconds: 200), () {
+          setState(() {
+            _containerColor = Colors.transparent; // Kembalikan ke transparan
+          });
+        });
       },
       child: Container(
         padding: const EdgeInsets.only(bottom: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // setiap row nya isinya adalah icon trash, nama food, total totalQuantity
+        color: _containerColor, // Warna kontainer
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              name.capitalizeFirstLetter(),
-              maxLines: 1, // Set the maximum number of lines
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              'X $totalQuantity',
-              maxLines: 1, // Set the maximum number of lines
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-              ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // setiap row nya isinya adalah icon trash, nama food, total totalQuantity
+              children: [
+                Text(
+                  widget.name.capitalizeFirstLetter(),
+                  maxLines: 1, // Set the maximum number of lines
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'X ${widget.totalQuantity}',
+                  maxLines: 1, // Set the maximum number of lines
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -79,14 +107,14 @@ class FoodStockWidget extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 25),
-                for (var stock in stocks)
+                for (var stock in widget.stocks)
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name.capitalizeFirstLetter(),
+                            widget.name.capitalizeFirstLetter(),
                             maxLines: 2, // Set the maximum number of lines
                             overflow: TextOverflow
                                 .ellipsis, // Show ellipsis when text overflows
@@ -111,7 +139,10 @@ class FoodStockWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.add_circle_outline_rounded),
+                            icon: const Icon(
+                              Icons.add_circle_outline_rounded,
+                              color: AppColors.darkIconColor,
+                            ),
                             onPressed: () {
                               // kurangkan quantity di sini
                             },
@@ -125,8 +156,10 @@ class FoodStockWidget extends StatelessWidget {
                                 fontWeight: FontWeight.w500),
                           ),
                           IconButton(
-                            icon:
-                                const Icon(Icons.remove_circle_outline_rounded),
+                            icon: const Icon(
+                              Icons.remove_circle_outline_rounded,
+                              color: AppColors.darkIconColor,
+                            ),
                             onPressed: () {
                               // kurangkan quantity di sini
                             },

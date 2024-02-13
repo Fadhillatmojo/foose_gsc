@@ -108,28 +108,8 @@ class _FoodStockPageState extends State<FoodStockPage> {
                     }
 
                     var foodStocks = snapshot.data!.docs;
-                    // Group by nama makanan
-                    // List<Widget> foodStockWidgets = [];
+                    // Group widget by nama makanan
                     var groupedFoodStocks = groupFoodStocksByName(foodStocks);
-
-                    // for (var foodStock in foodStocks) {
-                    //   var name = foodStock['name'];
-                    //   var quantity = foodStock['quantity'].toString();
-                    //   var expirationDuration =
-                    //       foodStock['expirationDuration'];
-                    //   var purchaseDate = foodStock['purchaseDate'];
-
-                    //   // Konversi Timestamp ke DateTime dan kemudian ke dalam String dengan format yang diinginkan
-                    //   var purchaseDateTime =
-                    //       (purchaseDate as Timestamp).toDate();
-                    //   var createdAt = DateFormat('dd MMMM yyyy HH:mm')
-                    //       .format(purchaseDateTime);
-
-                    //   // Assuming you have a separate widget for displaying foodStocks
-                    //   var foodStockWidget = FoodStockWidget(
-                    //       name, quantity, expirationDuration, createdAt);
-                    //   foodStockWidgets.add(foodStockWidget);
-                    // }
 
                     return ListView(
                       shrinkWrap: true,
