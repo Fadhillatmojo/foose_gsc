@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.2
+  camera: ^0.10.5+9
   cloud_firestore: ^4.14.0
   collection: ^1.18.0
   cupertino_icons: ^1.0.2
@@ -43,6 +44,8 @@ dependencies:
   fluttertoast: ^8.2.4
   google_fonts: ^6.1.0
   intl: ^0.19.0
+  path: ^1.8.3
+  path_provider: ^2.1.2
   shared_preferences: ^2.2.2
 
 dev_dependencies:

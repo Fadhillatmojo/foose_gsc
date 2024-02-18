@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foose_gsc/main.dart';
 import 'package:foose_gsc/shared/shared.dart';
 import 'package:foose_gsc/ui/pages/pages.dart';
 
@@ -15,7 +16,7 @@ class _NavbarPageState extends State<NavbarPage> {
   final List<Widget> _childrenPage = [
     const ArticlePage(),
     const RecipePage(),
-    const ScanPage(),
+    if (cameras != null) ScanPage(cameras: cameras!),
     const FoodStockPage(),
     const ProfilePage(),
   ];

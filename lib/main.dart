@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import 'ui/pages/pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+List<CameraDescription>? cameras;
 void main() async {
   // ini untuk mengecek platformnya itu android atau bukan, kalau iya maka inisialisasikan Firebase dengan atribut nya sebagai di bawah
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,7 @@ void main() async {
               projectId: 'foose-food-stock-management'),
         )
       : await Firebase.initializeApp();
+  cameras = await availableCameras();
 
   runApp(const App());
 }
