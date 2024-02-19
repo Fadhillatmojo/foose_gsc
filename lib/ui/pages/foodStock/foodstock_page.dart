@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foose_gsc/shared/shared.dart';
+import 'package:foose_gsc/ui/pages/foodStock/add_foodstock_page.dart';
 import 'package:foose_gsc/ui/widgets/widgets.dart';
 
 class FoodStockPage extends StatefulWidget {
@@ -111,26 +112,75 @@ class _FoodStockPageState extends State<FoodStockPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(children: [
-                GestureDetector(
-                  onTap: () {
-                    // Ubah warna kontainer menjadi abu-abu sejenak ketika diklik
-                    setState(() {
-                      _containerColor = AppColors
-                          .microInteractionGreyColor; // Warna abu-abu dengan opasitas 0.5
-                    });
+                // GestureDetector(
+                //   onTap: () {
+                //     // Ubah warna kontainer menjadi abu-abu sejenak ketika diklik
+                //     setState(() {
+                //       _containerColor = AppColors
+                //           .microInteractionGreyColor; // Warna abu-abu dengan opasitas 0.5
+                //     });
 
-                    // Kembalikan warna kontainer ke semula setelah beberapa waktu
-                    Future.delayed(const Duration(milliseconds: 200), () {
-                      setState(() {
-                        _containerColor =
-                            Colors.transparent; // Kembalikan ke transparan
-                      });
-                    });
+                //     // Kembalikan warna kontainer ke semula setelah beberapa waktu
+                //     Future.delayed(const Duration(milliseconds: 200), () {
+                //       setState(() {
+                //         _containerColor =
+                //             Colors.transparent; // Kembalikan ke transparan
+                //       });
+                //     });
+                //   },
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(
+                //           10.0), // Adjust the value as needed
+                //       color: _containerColor,
+                //     ),
+                //     child: const Icon(
+                //       Icons.more_vert_outlined,
+                //       color: AppColors.primaryColor,
+                //     ),
+                //   ),
+                // ),
+                PopupMenuButton<String>(
+                  onSelected: (value) {
+                    if (value == 'add') {
+                      // Tindakan untuk menambahkan food stock ke halaman add
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddFoodStock(),
+                        ),
+                      );
+                    } else if (value == 'delete') {
+                      // Tindakan untuk menghapus food stock
+                      // Misalnya, tampilkan dialog konfirmasi untuk menghapus food stock
+                    }
                   },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: 'add',
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.add,
+                          color: AppColors.primaryColor,
+                        ),
+                        title: Text('Add Food Stock'),
+                      ),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'delete',
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.delete_outline,
+                          color: AppColors.redColor,
+                        ),
+                        title: Text('Delete Food Stock'),
+                      ),
+                    ),
+                  ],
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Adjust the value as needed
+                      borderRadius: BorderRadius.circular(10.0),
                       color: _containerColor,
                     ),
                     child: const Icon(
