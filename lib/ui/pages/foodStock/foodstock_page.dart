@@ -112,34 +112,7 @@ class _FoodStockPageState extends State<FoodStockPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(children: [
-                // GestureDetector(
-                //   onTap: () {
-                //     // Ubah warna kontainer menjadi abu-abu sejenak ketika diklik
-                //     setState(() {
-                //       _containerColor = AppColors
-                //           .microInteractionGreyColor; // Warna abu-abu dengan opasitas 0.5
-                //     });
-
-                //     // Kembalikan warna kontainer ke semula setelah beberapa waktu
-                //     Future.delayed(const Duration(milliseconds: 200), () {
-                //       setState(() {
-                //         _containerColor =
-                //             Colors.transparent; // Kembalikan ke transparan
-                //       });
-                //     });
-                //   },
-                //   child: Container(
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(
-                //           10.0), // Adjust the value as needed
-                //       color: _containerColor,
-                //     ),
-                //     child: const Icon(
-                //       Icons.more_vert_outlined,
-                //       color: AppColors.primaryColor,
-                //     ),
-                //   ),
-                // ),
+                // popup menu top right button
                 PopupMenuButton<String>(
                   onSelected: (value) {
                     if (value == 'add') {
