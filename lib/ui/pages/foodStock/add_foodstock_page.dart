@@ -84,7 +84,7 @@ class _AddFoodStockState extends State<AddFoodStock> {
       ),
     );
 
-    // save button to save food stock to firebase
+    // save button to save food stock to firebase add to firebase
     final saveButton = Material(
       elevation: 0,
       borderRadius: BorderRadius.circular(10),
